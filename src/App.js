@@ -1,28 +1,44 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import HomePage from "./Pages/HomePage";
+import './AppStyles.css';
+import ConstantPage from './Pages/ConstantPage';
+import * as firebase from "firebase/app";
+import "firebase/firestore";
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+
+    componentWillMount() {
+        const config = {
+            apiKey: process.env.REACT_APP_APIKEY,
+            authDomain: process.env.REACT_APP_AUTHDOMAIN,
+            databaseURL: process.env.REACT_APP_DATABASEURL,
+            projectId: process.env.REACT_APP_PROJECTID,
+            storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+            messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID
+        };
+        firebase.initializeApp(config);
+    }
+
+    render() {
+        return (
+            <Router>
+                <div className="content">
+                    <Switch>
+                        <Route path="/" exact component={HomePage} />
+                        <Route path="/constants/:id" component={ConstantPage} />
+                        <Route component={NoMatch} />
+                    </Switch>
+                </div>
+            </Router>
+        );
+    }
+}
+
+const NoMatch = () => {
+    return <div>
+        No Match
+    </div>
 }
 
 export default App;

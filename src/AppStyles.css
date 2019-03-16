@@ -1,0 +1,12 @@
+html, body {
+    font-family: Helvetica, Arial, sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+
+.content {
+    width: 80%;
+    max-width: 700px;
+    margin: 0px auto;
+    min-width: 340px;
+}
