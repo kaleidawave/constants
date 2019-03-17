@@ -16,7 +16,7 @@ class HomePage extends Component {
 
     retrieveItems() {
         const firestore = firebase.firestore();
-        firestore.collection('constants').get().then(constants => {
+        firestore.collection('constants').limit(3).get().then(constants => {
             this.setState({ items: constants.docs.map(doc => doc.data()) });
         });
     }
@@ -51,6 +51,7 @@ class HomePage extends Component {
                     </tbody>
 
                 </table>
+                <button id="show-more">Show More</button>
             </div>
         );
     }
@@ -58,22 +59,34 @@ class HomePage extends Component {
 
 const Item = (props) => (
     <tr className="item">
-        <td><Link to={`/constants/${props.id}`}>{props.name}</Link></td>
+        <td><Link className="item-link" to={`/constants/${props.id}`}>{props.name}</Link></td>
         <td>
             {
                 props.categories.split(', ').map(category => <Link className="item-category" to="/" key={category}>{category}</Link>)
             }
         </td>
-        <td><p onClick={(e) => { navigator.clipboard.writeText(props.value) }}>
-            {props.value}
-            {
-                props.exponent === '' ? null : <span>&#215;10<sup>{props.exponent}</sup></span>
-            }
-            {
-                props.prefix === '' ? null : (<span> {props.prefix}</span>)
-            }
-        </p></td>
+        <td>
+            <p onClick={(e) => { navigator.clipboard.writeText(props.value) }}>
+                <Value {...props}/>
+            </p>
+        </td>
     </tr>
+)
+
+const Value = (props) => (
+    <span>
+        { <span>{props.value} </span> }
+        {
+            props.exponent === '' ? <span className="empty-space"/> : <span>&#215;10<sup>{props.exponent} </sup></span>
+        }
+        {
+            props.prefix === '' ? null : (<Prefix prefix={props.prefix}/>)
+        }
+    </span>
+)
+
+const Prefix = (props) => (
+    <span dangerouslySetInnerHTML={{ __html: props.prefix.replace(/[0-9,-]+/g, "<sup>$&</sup>") }}/>
 )
 
 export default HomePage;

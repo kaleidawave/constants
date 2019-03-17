@@ -1,16 +1,19 @@
 #search {
     display: flex;
-    border: 2px solid black;
+    border: 1.5px solid black;
     align-items: center;
     border-radius: 22px 22px;
+    max-width: 225px;
+    margin: 0px auto;
+    transition: max-width .5s ease-in-out;
 }
 
 #search > * {
-    font-size: 18px;
+    font-size: 14px;
 }
 
 #search > i {
-    padding: 8px;
+    padding: 4px;
 }
 
 #search > input {
@@ -21,12 +24,16 @@
     flex-grow: 1;
 }
 
+#search:focus-within {
+    max-width: 500px;
+}
+
 #search > button {
     border: none;
     background-color: black;
     color: white;
-    padding: 1px 16px;
-    font-size: 28px;
+    padding: 0px 8px;
+    font-size: 20px;
     border-radius: 0px 22px 22px 0px;
     outline: none;
 }
@@ -42,12 +49,10 @@
 #constants-table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed;
 }
 
 #constants-table th, td {
     padding: 2px 6px;
-    border: 1px solid black;
     line-height: 24px;
 }
 
@@ -75,6 +80,37 @@
     margin: 0px;
 }
 
+.item a.item-link {
+    margin: 0px;
+    text-decoration: none;
+    color:black;
+}
+
+.item a.item-link:visited {
+    color: black; 
+}
+
 th::after {
     content: ':';
+}
+
+.empty-space {
+    margin-left: 6ch;
+}
+
+#show-more {
+    margin: 18px auto;
+    display: block;
+    border: 2px solid blue;
+    padding: 4px 14px;
+    background: none;
+    color: blue;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: all .4s;
+}
+
+#show-more:hover {
+    color: white;
+    background: blue;
 }
